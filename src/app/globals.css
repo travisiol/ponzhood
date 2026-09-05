@@ -1,0 +1,287 @@
+@import "tailwindcss";
+
+/*
+  Art direction: Robinhood, read off robinhood.com rather than remembered.
+
+  Their ground is not black — it is #110E08, a warm off-black with a trace of
+  olive in it, and everything else on the page is mixed toward that warmth. The
+  accent is #CCFF00, a neon chartreuse, and it is spent on exactly one thing per
+  screen: the primary control. Headlines are a light serif at enormous sizes
+  (they set Martina Plantijn; Instrument Serif is the free face closest to it,
+  and appears in their own @font-face list). Everything that is not a headline
+  is a grotesque — Geist, also in their stack.
+
+  Market colour is separate from brand colour on purpose: #00C805 up and #FF5000
+  down are Robinhood's price colours and belong to numbers, never to chrome.
+*/
+
+@theme {
+  --color-ink: #110e08;
+  --color-soot: #090702;
+  --color-raise: #1b1710;
+  --color-raise-2: #262019;
+  --color-paper: #ffffff;
+  --color-bone: #f4f1ea;
+  --color-bone-2: #e8e3d7;
+
+  --color-volt: #ccff00;
+  --color-volt-2: #b5e300;
+  /* Secondary and tertiary text, tuned against the off-black: 9.8:1 and 5.2:1.
+     Both are re-pointed inside the light sections, further down. */
+  --color-ash: #bfbfbf;
+  --color-smoke: #8f897c;
+
+  --color-up: #00c805;
+  --color-down: #ff5000;
+
+  --font-sans: "Geist", ui-sans-serif, system-ui, -apple-system, "Segoe UI",
+    Helvetica, Arial, sans-serif;
+  --font-serif: "Instrument Serif", "Martina Plantijn", Georgia,
+    "Times New Roman", serif;
+  --font-mono: "Geist Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
+
+  --radius-card: 22px;
+  --radius-tile: 16px;
+  --radius-pill: 999px;
+}
+
+@layer base {
+  * {
+    border-color: color-mix(in oklab, white 10%, transparent);
+  }
+
+  html {
+    scroll-behavior: smooth;
+    -webkit-text-size-adjust: 100%;
+  }
+
+  body {
+    background: var(--color-ink);
+    color: var(--color-paper);
+    font-family: var(--font-sans);
+    font-weight: 400;
+    letter-spacing: -0.011em;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+
+  ::selection {
+    background: var(--color-volt);
+    color: var(--color-ink);
+  }
+
+  /* Numbers are read down a column far more than they are read in a sentence. */
+  table,
+  .tnum {
+    font-variant-numeric: tabular-nums;
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--color-volt);
+    outline-offset: 2px;
+    border-radius: 4px;
+  }
+}
+
+@layer components {
+  /*
+    Custom class names are kept clear of Tailwind's utility namespace — a
+    component class called `.block` or `.grid` is picked up by every element
+    that also carries that utility, and the result looks like a design choice
+    rather than a bug.
+  */
+
+  /*
+    The light sections re-point the two muted text tokens rather than swapping
+    class names on every element inside them. Tailwind v4 emits `text-smoke` as
+    `color: var(--color-smoke)`, so redefining the variable on the ground
+    itself cascades to everything under it — which means a component dropped
+    into a bone section is legible without knowing which ground it landed on.
+    Grey on bone was 3.8:1 before this; it is 6.5:1 now.
+  */
+  .bg-bone,
+  .bg-paper {
+    --color-ash: #3d3931;
+    --color-smoke: #5a554c;
+  }
+
+  .headline {
+    font-family: var(--font-serif);
+    font-weight: 400;
+    line-height: 0.94;
+    letter-spacing: -0.02em;
+  }
+
+  .eyebrow {
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+  }
+
+  /* The one control that carries the accent. */
+  .pill-volt {
+    background: var(--color-volt);
+    color: var(--color-ink);
+    border-radius: var(--radius-pill);
+    font-weight: 500;
+    transition: background 0.18s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  }
+  .pill-volt:hover {
+    background: var(--color-volt-2);
+  }
+
+  .pill-line {
+    border: 1px solid color-mix(in oklab, white 18%, transparent);
+    border-radius: var(--radius-pill);
+    color: var(--color-paper);
+    transition:
+      background 0.18s ease,
+      border-color 0.18s ease;
+  }
+  .pill-line:hover {
+    background: color-mix(in oklab, white 7%, transparent);
+    border-color: color-mix(in oklab, white 32%, transparent);
+  }
+
+  .pill-dark {
+    background: var(--color-ink);
+    color: var(--color-paper);
+    border-radius: var(--radius-pill);
+    transition: background 0.18s ease;
+  }
+  .pill-dark:hover {
+    background: var(--color-raise-2);
+  }
+
+  /* Panel on the dark ground: a hairline and a whisper of light, no more. */
+  .panel {
+    background: color-mix(in oklab, white 3.5%, transparent);
+    border: 1px solid color-mix(in oklab, white 8%, transparent);
+    border-radius: var(--radius-card);
+  }
+  .panel-hover {
+    transition:
+      background 0.2s ease,
+      border-color 0.2s ease;
+  }
+  .panel-hover:hover {
+    background: color-mix(in oklab, white 6%, transparent);
+    border-color: color-mix(in oklab, white 18%, transparent);
+  }
+
+  /* Same object on the light ground. */
+  .panel-light {
+    background: var(--color-paper);
+    border: 1px solid color-mix(in oklab, black 8%, transparent);
+    border-radius: var(--radius-card);
+  }
+
+  .hair {
+    border-top: 1px solid color-mix(in oklab, white 9%, transparent);
+  }
+  .hair-dark {
+    border-top: 1px solid color-mix(in oklab, black 10%, transparent);
+  }
+
+  /*
+    The hero ground. Robinhood puts a dark sphere in smoke behind the headline;
+    this is that, drawn with gradients so the page ships no image at all — the
+    sphere is a radial that is *darker* than the page, lit along one rim.
+  */
+  .atmosphere {
+    position: absolute;
+    inset: 0;
+    overflow: hidden;
+    pointer-events: none;
+  }
+  .atmosphere::before {
+    content: "";
+    position: absolute;
+    left: 50%;
+    top: 42%;
+    width: min(120vw, 1180px);
+    aspect-ratio: 1;
+    transform: translate(-50%, -50%);
+    border-radius: 50%;
+    background:
+      radial-gradient(
+        circle at 38% 30%,
+        color-mix(in oklab, var(--color-volt) 9%, transparent) 0%,
+        transparent 42%
+      ),
+      radial-gradient(
+        circle at 50% 50%,
+        #05040100 58%,
+        #050401 60%,
+        #0d0b06 76%,
+        transparent 79%
+      );
+    filter: blur(1px);
+    opacity: 0.9;
+  }
+  .atmosphere::after {
+    content: "";
+    position: absolute;
+    inset: -20%;
+    background:
+      radial-gradient(
+        60% 40% at 18% 12%,
+        color-mix(in oklab, white 6%, transparent),
+        transparent 70%
+      ),
+      radial-gradient(
+        50% 30% at 88% 30%,
+        color-mix(in oklab, var(--color-volt) 7%, transparent),
+        transparent 72%
+      ),
+      radial-gradient(
+        90% 50% at 50% 100%,
+        color-mix(in oklab, black 55%, transparent),
+        transparent 68%
+      );
+  }
+
+  /* Continuous, so it survives a screenshot at any moment. */
+  .marquee-track {
+    display: flex;
+    width: max-content;
+    animation: marquee 42s linear infinite;
+  }
+  .marquee-track:hover {
+    animation-play-state: paused;
+  }
+
+  .grid-lines {
+    background-image:
+      linear-gradient(
+        to right,
+        color-mix(in oklab, white 4%, transparent) 1px,
+        transparent 1px
+      ),
+      linear-gradient(
+        to bottom,
+        color-mix(in oklab, white 4%, transparent) 1px,
+        transparent 1px
+      );
+    background-size: 64px 64px;
+  }
+}
+
+@keyframes marquee {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .marquee-track {
+    animation: none;
+  }
+  html {
+    scroll-behavior: auto;
+  }
+}
