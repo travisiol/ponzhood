@@ -4,7 +4,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 import clsx from "clsx";
-import { Mark } from "@/components/Mark";
+import { Logo } from "@/components/Logo";
 import { nav, siteConfig } from "@/lib/site-config";
 
 export function Nav() {
@@ -31,10 +31,10 @@ export function Nav() {
       <div className="mx-auto flex h-[68px] max-w-[1240px] items-center gap-3 px-5 sm:px-8">
         <Link
           href="/"
-          className="flex shrink-0 items-center gap-2.5 text-paper"
+          className="group flex shrink-0 items-center gap-2.5 text-paper"
           aria-label={`${siteConfig.wordmark} home`}
         >
-          <Mark size={21} className="text-volt" />
+          <Logo size={30} className="transition-transform duration-200 group-hover:scale-[1.06]" />
           <span className="font-serif text-[23px] leading-none tracking-[-0.01em]">
             {siteConfig.wordmark}
           </span>

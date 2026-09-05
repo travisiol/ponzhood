@@ -1,5 +1,7 @@
 import Link from "next/link";
 import { Marquee } from "@/components/Marquee";
+import { HeroScene } from "@/components/HeroScene";
+import { FeeFlow } from "@/components/FeeFlow";
 import { LaunchCard } from "@/components/LaunchCard";
 import { Chip, Eyebrow, Section, SampleNote } from "@/components/ui";
 import { sampleLaunches } from "@/data/launches";
@@ -71,6 +73,10 @@ export default function Home() {
           </div>
 
           <div className="mt-16">
+            <HeroScene />
+          </div>
+
+          <div className="mt-16">
             <p className="eyebrow mb-4 text-center text-smoke">Pair against</p>
             <Marquee />
           </div>
@@ -113,8 +119,11 @@ export default function Home() {
 
           <div className="mt-12 grid gap-px overflow-hidden rounded-card border border-white/8 bg-white/8 md:grid-cols-3">
             {steps.map((step) => (
-              <div key={step.n} className="bg-ink p-7">
-                <span className="font-mono text-[12px] text-volt">
+              <div
+                key={step.n}
+                className="group bg-ink p-7 transition-colors duration-200 hover:bg-raise"
+              >
+                <span className="font-mono text-[12px] text-smoke transition-colors duration-200 group-hover:text-volt">
                   {step.n}
                 </span>
                 <h3 className="mt-5 text-[19px] font-medium">{step.title}</h3>
@@ -123,6 +132,11 @@ export default function Home() {
                 </p>
               </div>
             ))}
+          </div>
+
+          <div className="mt-14">
+            <p className="eyebrow mb-6 text-smoke">Where a trade ends up</p>
+            <FeeFlow />
           </div>
         </div>
       </Section>

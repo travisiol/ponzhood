@@ -48,12 +48,17 @@ export default function DocsPage() {
       <div className="mt-14 grid gap-12 lg:grid-cols-[210px_1fr] lg:gap-16">
         <nav className="lg:sticky lg:top-[96px] lg:self-start">
           <p className="eyebrow text-smoke">On this page</p>
-          <ul className="mt-4 space-y-2">
+          {/*
+            The rail shifts under the pointer — the row gains a pixel of
+            indent, its tick turns accent, and the label brightens. It is the
+            cheapest way to make a list of anchors feel like controls.
+          */}
+          <ul className="mt-4">
             {toc.map((item) => (
               <li key={item.id}>
                 <a
                   href={`#${item.id}`}
-                  className="text-[13px] text-ash transition-colors hover:text-volt"
+                  className="block border-l border-white/12 py-1.5 pl-3 text-[13px] text-ash transition-[color,border-color,padding-left] duration-200 hover:border-volt hover:pl-4 hover:text-volt"
                 >
                   {item.label}
                 </a>
@@ -179,7 +184,7 @@ export default function DocsPage() {
             </P>
             <div className="mt-6 space-y-5">
               {vaultTemplates.map((t) => (
-                <div key={t.id} className="panel p-6">
+                <div key={t.id} className="panel panel-hover p-6">
                   <div className="flex flex-wrap items-center gap-3">
                     <h4 className="font-serif text-[26px] leading-none">
                       {t.name}

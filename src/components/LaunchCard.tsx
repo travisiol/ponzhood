@@ -66,7 +66,41 @@ export function LaunchCard({ launch }: { launch: Launch }) {
           value={graduated ? launch.quote : `${launch.graduation}%`}
         />
       </div>
+
+      {/*
+        The card is one big link, and nothing inside it looks clickable on its
+        own. This foot is what says so: the label brightens and the arrow steps
+        up and to the right in the accent, the same tell the reference site
+        uses on its token cards.
+      */}
+      <div className="mt-4 flex items-center justify-between">
+        <span className="font-mono text-[10px] uppercase tracking-[0.12em] text-smoke transition-colors duration-200 group-hover:text-paper">
+          View token
+        </span>
+        <ArrowUpRight />
+      </div>
     </Link>
+  );
+}
+
+function ArrowUpRight() {
+  return (
+    <svg
+      width="13"
+      height="13"
+      viewBox="0 0 14 14"
+      fill="none"
+      aria-hidden="true"
+      className="text-smoke transition duration-200 group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:text-volt"
+    >
+      <path
+        d="M3.5 10.5 10.5 3.5M10.5 3.5H5.2m5.3 0v5.3"
+        stroke="currentColor"
+        strokeWidth="1.6"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+    </svg>
   );
 }
 

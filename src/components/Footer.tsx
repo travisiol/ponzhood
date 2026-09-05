@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { Mark } from "@/components/Mark";
+import { Logo } from "@/components/Logo";
 import { chain, siteConfig } from "@/lib/site-config";
 
 const columns = [
@@ -32,7 +32,7 @@ export function Footer() {
         <div className="grid gap-12 md:grid-cols-[1.4fr_1fr_1fr_1fr]">
           <div>
             <div className="flex items-center gap-2.5">
-              <Mark size={22} className="text-volt" />
+              <Logo size={34} />
               <span className="font-serif text-[26px] leading-none">
                 {siteConfig.wordmark}
               </span>

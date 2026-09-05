@@ -121,8 +121,11 @@ export default function SeatsPage() {
 
         <div className="mt-12 grid gap-px overflow-hidden rounded-card border border-black/8 bg-black/8 sm:grid-cols-2 lg:grid-cols-3">
           {buyerSteps.map((step) => (
-            <div key={step.n} className="bg-bone p-7">
-              <span className="font-mono text-[12px] text-ink/45">{step.n}</span>
+            <div
+              key={step.n}
+              className="group bg-bone p-7 transition-colors duration-200 hover:bg-bone-2"
+            >
+              <span className="font-mono text-[12px] text-smoke">{step.n}</span>
               <h3 className="mt-4 text-[19px] font-medium">{step.title}</h3>
               <p className="mt-3 text-[14px] leading-relaxed text-smoke">
                 {step.body}
@@ -144,7 +147,7 @@ export default function SeatsPage() {
 
         <div className="mt-12 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
           {deskActions.map((action) => (
-            <div key={action.name} className="panel p-6">
+            <div key={action.name} className="panel panel-hover p-6">
               <div className="flex items-center justify-between gap-3">
                 <h3 className="font-serif text-[26px] leading-none">
                   {action.name}
@@ -200,7 +203,7 @@ export default function SeatsPage() {
 
         <div className="mt-8 grid gap-4 sm:grid-cols-2">
           {sampleSeries.map((series) => (
-            <div key={series.fuel} className="panel flex items-center gap-5 p-6">
+            <div key={series.fuel} className="panel panel-hover flex items-center gap-5 p-6">
               <div className="grid h-16 w-16 shrink-0 place-items-center rounded-tile bg-volt font-serif text-[24px] text-ink">
                 {series.initials}
               </div>

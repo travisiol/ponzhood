@@ -1,3 +1,5 @@
+import fs from "node:fs";
+import path from "node:path";
 import { ImageResponse } from "next/og";
 import { siteConfig } from "@/lib/site-config";
 
@@ -6,10 +8,22 @@ export const contentType = "image/png";
 export const alt = `${siteConfig.name} — ${siteConfig.tagline}`;
 
 /**
- * No webfont is fetched here: an OG image is rendered wherever the build runs,
- * and a font request that fails there fails the build. The system serif stack
- * carries the headline instead, which is close enough at this size.
+ * The mark is inlined as a data URI rather than fetched.
+ *
+ * This route renders wherever `next build` runs, which may have no outbound
+ * network and certainly has no running server of its own to request
+ * `/og-mark.png` from. Reading the file off disk at module scope is the one
+ * path that works in every one of those environments. `public/og-mark.png` is
+ * a 320px crop of the master render, so the base64 costs about 55KB.
+ *
+ * No webfont is loaded for the same reason: a font request that fails at build
+ * time fails the build. The system serif carries the headline, which at this
+ * size is close enough to the face the site itself sets.
  */
+const markSrc = `data:image/png;base64,${fs
+  .readFileSync(path.join(process.cwd(), "public", "og-mark.png"))
+  .toString("base64")}`;
+
 export default function OpengraphImage() {
   return new ImageResponse(
     (
@@ -21,27 +35,20 @@ export default function OpengraphImage() {
           flexDirection: "column",
           justifyContent: "space-between",
           background: "#110e08",
-          padding: "72px",
+          padding: "68px",
           fontFamily: "Georgia, serif",
         }}
       >
-        <div style={{ display: "flex", alignItems: "center", gap: 18 }}>
-          <svg width="46" height="46" viewBox="0 0 24 24" fill="none">
-            <path
-              d="M20.2 12.6a8.4 8.4 0 1 1-4.9-7.9"
-              stroke="#ccff00"
-              strokeWidth="2"
-              strokeLinecap="round"
-            />
-            <path
-              d="M11.6 12.4 20.8 3.2m0 0h-6.1m6.1 0v6.1"
-              stroke="#ccff00"
-              strokeWidth="2"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            />
-          </svg>
-          <span style={{ color: "#ffffff", fontSize: 44 }}>
+        <div style={{ display: "flex", alignItems: "center", gap: 20 }}>
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            src={markSrc}
+            alt=""
+            width={76}
+            height={76}
+            style={{ borderRadius: 18 }}
+          />
+          <span style={{ color: "#ffffff", fontSize: 46 }}>
             {siteConfig.wordmark}
           </span>
           <span
@@ -62,7 +69,7 @@ export default function OpengraphImage() {
           <span
             style={{
               color: "#ffffff",
-              fontSize: 92,
+              fontSize: 88,
               lineHeight: 1,
               letterSpacing: "-0.02em",
             }}
@@ -72,8 +79,8 @@ export default function OpengraphImage() {
           <span
             style={{
               color: "#ffffff",
-              fontSize: 92,
-              lineHeight: 1.05,
+              fontSize: 88,
+              lineHeight: 1.06,
               letterSpacing: "-0.02em",
             }}
           >
@@ -87,7 +94,7 @@ export default function OpengraphImage() {
             alignItems: "center",
             justifyContent: "space-between",
             borderTop: "1px solid #ffffff1a",
-            paddingTop: 28,
+            paddingTop: 26,
             fontFamily: "monospace",
             fontSize: 22,
           }}

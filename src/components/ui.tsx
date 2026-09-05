@@ -85,7 +85,7 @@ export function Chip({
       {variant === "live" && (
         <span
           className={clsx(
-            "h-1.5 w-1.5 rounded-full",
+            "blink h-1.5 w-1.5 rounded-full",
             isLight ? "bg-ink" : "bg-volt",
           )}
         />

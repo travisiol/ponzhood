@@ -110,7 +110,7 @@ export function LaunchForm() {
   return (
     <div className="grid gap-8 lg:grid-cols-[1.55fr_1fr] lg:items-start">
       {/* ── The form ───────────────────────────────────────────────────── */}
-      <div className="panel p-6 sm:p-8">
+      <div className="panel float p-6 sm:p-8">
         <Group title="Token">
           <div className="grid gap-5 sm:grid-cols-2">
             <Field
@@ -241,10 +241,10 @@ export function LaunchForm() {
                 onClick={() => setVault(t.id)}
                 aria-pressed={vault === t.id}
                 className={clsx(
-                  "rounded-tile border p-4 text-left transition-colors",
+                  "rounded-tile border p-4 text-left transition duration-200",
                   vault === t.id
-                    ? "border-volt bg-volt/8"
-                    : "border-white/10 hover:border-white/25",
+                    ? "border-volt bg-volt/8 shadow-[0_10px_28px_-18px_rgba(204,255,0,0.55)]"
+                    : "border-white/10 hover:-translate-y-0.5 hover:border-white/25 hover:bg-white/3",
                 )}
               >
                 <span className="text-[15px] font-medium">{t.name}</span>
@@ -334,7 +334,7 @@ export function LaunchForm() {
       </div>
 
       {/* ── The rail ───────────────────────────────────────────────────── */}
-      <aside className="panel sticky top-[88px] p-6">
+      <aside className="panel float sticky top-[88px] p-6">
         <p className="eyebrow text-smoke">Your token</p>
         <p className="headline mt-3 text-[34px] break-words">
           {ticker ? `$${ticker}` : "ticker"}
